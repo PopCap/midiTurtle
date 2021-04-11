@@ -4,12 +4,17 @@ package musicapp;
 import java.awt.event.*;
 
 import java.io.*;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 import javax.swing.*;
 
 //Multimedia libraries
 import app.*;
 import io.*;
-
 
 /**
  * An application that displays shapes drawn from music properties.
@@ -20,126 +25,176 @@ import io.*;
  */
 public abstract class MusicDrawerApplication extends JApplication implements ActionListener
 {
-  public static final int WIDTH  = 1000;
+  public static final int WIDTH = 1000;
   public static final int HEIGHT = 800;
 
   protected static final String LOAD = "Load";
   protected static final String PLAY = "Play";
   protected static final String PAUSE = "Pause";
   protected static final String EXPORT = "Export";
-  
-  private JButton playButton, pauseButton, loadButton, exportButton;
+  protected static final String RESTART = "Restart";
+
+  private JButton playButton, pauseButton, loadButton, exportButton, restartButton;
   private JTextField fileField;
-  
+  private Sequencer sequencer = null;
+  private Sequence seq;
+
   /**
    * Explicit value constructor.
    * 
-   * @param args   The command line arguments
+   * @param args The command line arguments
    */
   public MusicDrawerApplication(final String[] args)
   {
     super(args, WIDTH, HEIGHT);
   }
 
-  
   /**
-   * Handle actionPerformed messages (required by ActionListener).
-   * In particular, get the input, perform the requested conversion,
-   * and display the result.
+   * Handle actionPerformed messages (required by ActionListener). In particular,
+   * get the input, perform the requested conversion, and display the result.
    * 
-   * @param evt  The ActionEvent that generated the actionPerformed message
+   * @param evt The ActionEvent that generated the actionPerformed message
    */
   @Override
   public void actionPerformed(final ActionEvent evt)
   {
     String ac = evt.getActionCommand();
-    
-    if (ac.equalsIgnoreCase(PLAY)) handlePlay();
-    else if (ac.equalsIgnoreCase(PAUSE)) handlePause();
-    else if (ac.equalsIgnoreCase(EXPORT)) handleExport();
-    else if (ac.equalsIgnoreCase(LOAD)) handleLoad();
+
+    if (ac.equalsIgnoreCase(PLAY))
+      handlePlay();
+    else if (ac.equalsIgnoreCase(PAUSE))
+      handlePause();
+    else if (ac.equalsIgnoreCase(EXPORT))
+      handleExport();
+    else if (ac.equalsIgnoreCase(LOAD))
+      handleLoad();
+    else if (ac.equalsIgnoreCase(RESTART))
+      handleRestart();
   }
-  
+
   /**
    * Handle the LOAD button.
    */
   protected void handleLoad()
   {
+    if(sequencer != null && sequencer.isRunning())
+    {
+      sequencer.close();
+    }
+      String fileName = fileField.getText();
+      File file;
 
+      try
+      {
+        file = new File(fileName);
+        FileInputStream fileInputStream = new FileInputStream(file);
+        seq = MidiSystem.getSequence(fileInputStream);
+
+        sequencer = MidiSystem.getSequencer();
+        sequencer.open();
+        sequencer.setSequence(seq);
+        sequencer.start();
+      } catch (IOException ioe)
+      {
+        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+            "Error", JOptionPane.ERROR_MESSAGE);
+      } catch (InvalidMidiDataException e)
+      {
+        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+            "Error", JOptionPane.ERROR_MESSAGE);
+      } catch (MidiUnavailableException e)
+      {
+        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+            "Error", JOptionPane.ERROR_MESSAGE);
+      }
   }
-  
+
   /**
    * Handle the PLAY button.
    */
   protected void handlePlay()
   {
-
+    sequencer.start();
   }
-  
+
   /**
    * Handle the PAUSE button.
    */
   protected void handlePause()
   {
-
+    sequencer.stop();
   }
-  
+
   /**
-   * Handle the LOAD button.
+   * Handle the EXPORT button.
    */
   protected void handleExport()
   {
 
   }
-  
+
+  /**
+   * Handle the RESTART button.
+   */
+  protected void handleRestart()
+  {
+    sequencer.stop();
+    handleLoad();
+  }
+
   /**
    * Get the GUI components to use to display the weather information.
    * 
    * @return The WeatherObserverPanel
    */
   protected abstract JComponent getGUIComponent();
-  
+
   /**
-   * Initialize this JApplication (required by JApplication).
-   * Specifically, construct and layout the JFrame.
+   * Initialize this JApplication (required by JApplication). Specifically,
+   * construct and layout the JFrame.
    */
   @Override
   public void init()
   {
     // Setup the content pane
-    JPanel contentPane = (JPanel)getContentPane();
+    JPanel contentPane = (JPanel) getContentPane();
     contentPane.setLayout(null);
 
     JLabel label = new JLabel("File: ");
     label.setBounds(30, 30, 40, 30);
     contentPane.add(label);
-    
+
     fileField = new JTextField();
     fileField.setBounds(80, 30, 200, 30);
     contentPane.add(fileField);
-    
+
     loadButton = new JButton(LOAD);
     loadButton.setBounds(320, 30, 60, 30);
     loadButton.addActionListener(this);
     contentPane.add(loadButton);
-    
+
     playButton = new JButton(PLAY);
     playButton.setBounds(400, 30, 60, 30);
     playButton.addActionListener(this);
     contentPane.add(playButton);
-    
+
     pauseButton = new JButton(PAUSE);
     pauseButton.setBounds(480, 30, 60, 30);
     pauseButton.addActionListener(this);
     contentPane.add(pauseButton);
-    
+
+    restartButton = new JButton(RESTART);
+    restartButton.setBounds(560, 30, 80, 30);
+    restartButton.addActionListener(this);
+    contentPane.add(restartButton);
+
     exportButton = new JButton(EXPORT);
-    exportButton.setBounds(560, 30, 80, 30);
+    exportButton.setBounds(660, 30, 80, 30);
     exportButton.addActionListener(this);
     contentPane.add(exportButton);
-    
+
     JComponent component = getGUIComponent();
-    component.setBounds(0, 60, WIDTH, HEIGHT-60);
+    component.setBounds(0, 60, WIDTH, HEIGHT - 60);
     contentPane.add(component);
   }
 }
