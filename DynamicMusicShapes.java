@@ -1,13 +1,21 @@
 package gui;
 
 
+import java.awt.BasicStroke;
 import java.awt.Color;
-
-
+import java.awt.Shape;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sound.midi.Sequence;
 
 import io.ResourceFinder;
+import pathwork.PathBuilder;
+import pathwork.VisualBuilder;
+import visual.VisualizationView;
 import visual.dynamic.described.Stage;
+import visual.statik.described.TransformableContent;
 import visual.statik.sampled.Content;
 
 
@@ -18,29 +26,53 @@ import visual.statik.sampled.Content;
  */
 public class DynamicMusicShapes extends Stage
 {
-  private Content watermark;
-  private ResourceFinder jarFinder;
   private Color currentColor;
+  private List<TransformableContent> rays;
+  PathBuilder pathBuilder;
+  VisualBuilder visualBuilder;
 
   /**
    * 
    * Explicit value constructor.
-   * 
-   * @param useWatermark  Non-null to indicate that a watermark should be used
-   * @param grayWatermark Non-null to indicate that the watermark (if used) should
-   *                      be gray
    * @param width         The width of this component (in pixels)
    * @param height        The height of this component (in pixels)
    * @throws IOException 
    */
-  public DynamicMusicShapes(final String useWatermark, final String grayWatermark, final int width,
-      final int height) throws IOException
+  public DynamicMusicShapes(final int width,
+      final int height, final Sequence sequence) throws IOException
   {
     super(100);
-
-    final Color BACKGROUND_COLOR = new Color(204, 204, 255);
+    
+    rays = new ArrayList<TransformableContent>();
+    
+    final Color BACKGROUND_COLOR = new Color(0, 0, 0);
+    
+    VisualizationView view = getView();
+    view.setBounds(0, 0, width, height);
+    view.setSize(width, height);
+    view.setBackground(BACKGROUND_COLOR);
+    
+    pathBuilder = new PathBuilder(sequence);
+    visualBuilder = new VisualBuilder(pathBuilder);
     
     
+    // have 30 rays forming the radial visual
+//    for (int i = 0; i < 90; i++)
+//    {
+//      TransformableContent visual = visualBuilder.buildContent(Color.WHITE, new Color(0, 0, 0, 0));
+//      visual.setRotation(i, 500.0, 500.0);
+//      rays.add(visual);
+//    }
+//    
+//    for (TransformableContent ray: rays) add(ray);
+  }
+  
+  public void updateShapes(final Sequence sequence)
+  {
+    pathBuilder = new PathBuilder(sequence);
+    visualBuilder = new VisualBuilder(pathBuilder);
+    
+    pathBuilder.buildShape();
   }
 
 }

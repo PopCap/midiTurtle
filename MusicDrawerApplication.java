@@ -2,19 +2,24 @@ package musicapp;
 
 //Java libraries
 import java.awt.event.*;
-
+import java.awt.geom.Path2D;
 import java.io.*;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiEvent;
+import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
+import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Track;
 import javax.swing.*;
 
 //Multimedia libraries
 import app.*;
 import io.*;
+import pathwork.PathBuilder;
 
 /**
  * An application that displays shapes drawn from music properties.
@@ -26,19 +31,20 @@ import io.*;
 public abstract class MusicDrawerApplication extends JApplication implements ActionListener
 {
   public static final int WIDTH = 1000;
-  public static final int HEIGHT = 800;
+  public static final int HEIGHT = 1000;
 
   protected static final String LOAD = "Load";
   protected static final String PLAY = "Play";
   protected static final String PAUSE = "Pause";
   protected static final String EXPORT = "Export";
   protected static final String RESTART = "Restart";
-
-  private JButton playButton, pauseButton, loadButton, exportButton, restartButton;
-  private JTextField fileField;
-  private Sequencer sequencer = null;
-  private Sequence seq;
-
+  
+  protected Sequence sequence = null;
+  protected Sequencer sequencer = null;
+  
+  protected JButton playButton, pauseButton, loadButton, exportButton, restartButton;
+  protected JTextField fileField;
+  
   /**
    * Explicit value constructor.
    * 
@@ -88,12 +94,15 @@ public abstract class MusicDrawerApplication extends JApplication implements Act
       {
         file = new File(fileName);
         FileInputStream fileInputStream = new FileInputStream(file);
-        seq = MidiSystem.getSequence(fileInputStream);
+        sequence = MidiSystem.getSequence(fileInputStream);
 
         sequencer = MidiSystem.getSequencer();
         sequencer.open();
-        sequencer.setSequence(seq);
-        sequencer.start();
+        sequencer.setSequence(sequence);
+        
+        
+//        pathBuilder = new PathBuilder(seq);
+//        pathBuilder.buildPath();
       } catch (IOException ioe)
       {
         JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
@@ -197,4 +206,5 @@ public abstract class MusicDrawerApplication extends JApplication implements Act
     component.setBounds(0, 60, WIDTH, HEIGHT - 60);
     contentPane.add(component);
   }
+
 }
