@@ -1,10 +1,16 @@
 package musicapp;
 
+import java.awt.Component;
+import java.awt.Graphics2D;
 //Java libraries
 import java.awt.event.*;
 import java.awt.geom.Path2D;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URISyntaxException;
+import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiMessage;
@@ -31,7 +37,7 @@ import pathwork.PathBuilder;
 public abstract class MusicDrawerApplication extends JApplication implements ActionListener
 {
   public static final int WIDTH = 1000;
-  public static final int HEIGHT = 1000;
+  public static final int HEIGHT = 1080;
 
   protected static final String LOAD = "Load";
   protected static final String PLAY = "Play";
@@ -229,7 +235,7 @@ public abstract class MusicDrawerApplication extends JApplication implements Act
     contentPane.add(exportButton);
 
     JComponent component = getGUIComponent();
-    component.setBounds(0, 60, WIDTH, HEIGHT - 60);
+    component.setBounds(0, 40, WIDTH, HEIGHT - 40);
     contentPane.add(component);
   }
 

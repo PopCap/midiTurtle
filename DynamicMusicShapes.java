@@ -52,9 +52,6 @@ public class DynamicMusicShapes extends Stage
     view.setSize(width, height);
     view.setBackground(BACKGROUND_COLOR);
     
-    pathBuilder = new PathBuilder(sequence);
-    visualBuilder = new VisualBuilder(pathBuilder);
-    
   }
   
   public void updateShapes(final Sequence sequence) throws IOException
@@ -62,11 +59,8 @@ public class DynamicMusicShapes extends Stage
     pathBuilder = new PathBuilder(sequence);
     visualBuilder = new VisualBuilder(pathBuilder);
     
-    pathBuilder.buildShape();
-    
-    
     // have 90 rays forming the radial visual
-    for (int i = 0; i < 90; i++)
+    for (int i = 0; i < 89; i++)
     {
       TransformableContent visual = visualBuilder.buildContent(Color.WHITE, new Color(0, 0, 0, 0));
       visual.setRotation(i, 500.0, 500.0);

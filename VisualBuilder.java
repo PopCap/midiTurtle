@@ -28,8 +28,7 @@ public class VisualBuilder
     {
       Content visual;
       Shape path;
-      
-      path = builder.buildShape();
+        path = builder.buildShape();
       
       visual = new Content(path, boundaryColor, interiorColor, new BasicStroke());
       visual.setLocation(0, 0);
