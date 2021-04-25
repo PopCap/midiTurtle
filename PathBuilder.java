@@ -201,10 +201,11 @@ public class PathBuilder
   }
   
   /**
+   * Helper function to determine octave impact on frequency.
    * 
-   * @param key
-   * @param octave
-   * @return
+   * @param key base note
+   * @param octave number
+   * @return appropriate frequency
    */
   private double octaveFrequency(final int key, final int octave)
   {

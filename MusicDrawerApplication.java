@@ -1,5 +1,6 @@
 package musicapp;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics2D;
 //Java libraries
@@ -130,6 +131,7 @@ public abstract class MusicDrawerApplication extends JApplication implements Act
   protected void handlePlay()
   {
     sequencer.start();
+    
   }
 
   /**
@@ -197,41 +199,50 @@ public abstract class MusicDrawerApplication extends JApplication implements Act
   @Override
   public void init()
   {
-    // Setup the content pane
+ // Setup the content pane
     JPanel contentPane = (JPanel) getContentPane();
     contentPane.setLayout(null);
+    contentPane.setBackground(new Color(20, 20, 20));
 
     JLabel label = new JLabel("File: ");
-    label.setBounds(30, 30, 40, 30);
+    label.setForeground(new Color(255, 255, 255));
+    label.setBounds(30, 5, 40, 30);
     contentPane.add(label);
 
     fileField = new JTextField();
-    fileField.setBounds(80, 30, 200, 30);
+    fileField.setBounds(80, 5, 200, 30);
+    fileField.setBackground(new Color(20, 20, 20));
+    fileField.setForeground(new Color(255, 255, 255));
     contentPane.add(fileField);
 
     loadButton = new JButton(LOAD);
-    loadButton.setBounds(320, 30, 60, 30);
+    loadButton.setBounds(320, 5, 60, 30);
     loadButton.addActionListener(this);
+    loadButton.setBackground(new Color(20, 20, 20));
     contentPane.add(loadButton);
 
     playButton = new JButton(PLAY);
-    playButton.setBounds(400, 30, 60, 30);
+    playButton.setBounds(400, 5, 60, 30);
     playButton.addActionListener(this);
+    playButton.setBackground(new Color(20, 20, 20));
     contentPane.add(playButton);
 
     pauseButton = new JButton(PAUSE);
-    pauseButton.setBounds(480, 30, 60, 30);
+    pauseButton.setBounds(480, 5, 70, 30);
     pauseButton.addActionListener(this);
+    pauseButton.setBackground(new Color(20, 20, 20));
     contentPane.add(pauseButton);
 
     restartButton = new JButton(RESTART);
-    restartButton.setBounds(560, 30, 80, 30);
+    restartButton.setBounds(565, 5, 80, 30);
     restartButton.addActionListener(this);
+    restartButton.setBackground(new Color(20, 20, 20));
     contentPane.add(restartButton);
 
     exportButton = new JButton(EXPORT);
-    exportButton.setBounds(660, 30, 80, 30);
+    exportButton.setBounds(665, 5, 80, 30);
     exportButton.addActionListener(this);
+    exportButton.setBackground(new Color(20, 20, 20));
     contentPane.add(exportButton);
 
     JComponent component = getGUIComponent();

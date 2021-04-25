@@ -69,8 +69,8 @@ public class MusicShapeApplication extends MusicDrawerApplication
         sequencer.open();
         sequencer.setSequence(sequence);
         
-        
         musicScreen.updateShapes(sequence);
+        musicScreen.updateFrames();
       } catch (IOException ioe)
       {
         JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
@@ -84,6 +84,28 @@ public class MusicShapeApplication extends MusicDrawerApplication
         JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
             "Error", JOptionPane.ERROR_MESSAGE);
       }
+  }
+  
+  @Override
+  /**
+   * Handle the PLAY button.
+   */
+  protected void handlePlay()
+  {
+    sequencer.start();
+    musicScreen.start();
+  }
+  
+  @Override
+  /**
+   * Handle the RESTART button.
+   */
+  protected void handleRestart()
+  {
+    sequencer.stop();
+    sequencer.start();
+    musicScreen.start();
+    handleLoad();
   }
   
   /**
