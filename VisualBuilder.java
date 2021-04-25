@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Shape;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import visual.statik.described.Content;
 
@@ -28,11 +29,25 @@ public class VisualBuilder
     {
       Content visual;
       Shape path;
-        path = builder.buildShape();
+      path = builder.buildShape();
       
       visual = new Content(path, boundaryColor, interiorColor, new BasicStroke());
       visual.setLocation(0, 0);
       
       return visual;
     }
+  
+  public ArrayList<Content> buildContentFrames(final Color boundaryColor, final Color interiorColor)
+  {
+    ArrayList<Content> visualFrames = new ArrayList<Content>();
+    for(Shape frame: builder.getShapeFrames())
+    {
+      Content visual;
+      
+      visual = new Content(frame, boundaryColor, interiorColor, new BasicStroke());
+      visual.setLocation(0, 0);
+      visualFrames.add(visual);
+    }
+    return visualFrames;
+  }
 }

@@ -33,6 +33,7 @@ public class PathBuilder
   
   private ArrayList<Long> tickTimes = new ArrayList<Long>(); // list of all unique ticks where a note is changed
   private ArrayList<Long> sampleTimes = new ArrayList<Long>(); // list of chosen tick times to sample for visual
+  private ArrayList<Path2D.Float> frames = new ArrayList<Path2D.Float>();
   private boolean[] activeNotes = new boolean[12]; // array of all active notes concurrently
   private Path2D.Float visual = new Path2D.Float();
   private Track[] midiTracks;
@@ -117,9 +118,9 @@ public class PathBuilder
       }
     }
     deltaY = 0.0f;
-    for (Long tick: tickTimes) System.out.println(tick);
-    System.out.println("_________________");
-    for (Long tick: sampleTimes) System.out.println(tick);
+//    for (Long tick: tickTimes) System.out.println(tick);
+//    System.out.println("_________________");
+//    for (Long tick: sampleTimes) System.out.println(tick);
     // loop through tickTimes to determine sampleTimes
     
 //    Collections.sort(tickTimes);
@@ -180,6 +181,9 @@ public class PathBuilder
         visual.lineTo(x + deltaX, y + deltaY);
         x += deltaX;
         
+        // clone current version of Path to consider it a frame
+        frames.add((Path2D.Float)visual.clone());
+        
         sampleIndex++;
         tickIndex++;
       }
@@ -189,6 +193,11 @@ public class PathBuilder
     }
 
     return visual;
+  }
+  
+  public ArrayList<Path2D.Float> getShapeFrames()
+  {
+    return frames;
   }
   
   /**
