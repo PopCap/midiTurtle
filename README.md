@@ -7,4 +7,5 @@ loading the file you can run and watch the animation by clicking play. Clicking 
 restart will rest everything as if you just clicked load. Finally, if you would like to save the created image, simply click export and
 a .png file of the image will be saved in the same folder that the program is contained in.
 
-Known bugs in the prgram are
+Known bugs in the program are associated with the export button. Currently it exports the file to the bin folder within the jar when it is 
+exported which is not accessible from the executable jar.
