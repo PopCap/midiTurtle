@@ -186,9 +186,9 @@ public abstract class MusicDrawerApplication extends JApplication implements Act
   }
 
   /**
-   * Get the GUI components to use to display the weather information.
+   * Get the GUI components to use to display the music screen.
    * 
-   * @return The WeatherObserverPanel
+   * @return The MusicScreen
    */
   protected abstract JComponent getGUIComponent();
 
