@@ -19,11 +19,23 @@ public class VisualBuilder
 {
   private PathBuilder builder;
   
+  /**
+   * Explicit value constructor.
+   *
+   * @param builder Used to create the paths
+   */
   public VisualBuilder(final PathBuilder builder)
   {
     this.builder = builder;
   }
   
+  /**
+   * Build the content.
+   *
+   * @param boundaryColor set the color.
+   * @param interiorColor set the color of the inside of the shape.
+   * @throws IOException
+   */
   public Content buildContent(final Color boundaryColor, final Color interiorColor)
     throws IOException
     {
@@ -37,6 +49,12 @@ public class VisualBuilder
       return visual;
     }
   
+  /**
+   * Build the content to be able to iterate over them.
+   *
+   * @param boundaryColor set the color.
+   * @param interiorColor set the color of the inside of the shape.
+   */
   public ArrayList<Content> buildContentFrames(final Color boundaryColor, final Color interiorColor)
   {
     ArrayList<Content> visualFrames = new ArrayList<Content>();
