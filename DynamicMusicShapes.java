@@ -45,6 +45,7 @@ public class DynamicMusicShapes extends Stage
    * Explicit value constructor.
    * @param width         The width of this component (in pixels)
    * @param height        The height of this component (in pixels)
+   * @param sequence      Midi file to be sampled.
    * @throws IOException 
    */
   public DynamicMusicShapes(final int width,
@@ -66,7 +67,7 @@ public class DynamicMusicShapes extends Stage
   /**
    * 
    * Draws the initial shape with black lines.
-   * @param width         Midi file to be sequenced.
+   * @param sequence         Midi file to be sequenced.
    * @throws IOException 
    */
   public void updateShapes(final Sequence sequence) throws IOException
