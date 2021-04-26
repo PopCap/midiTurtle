@@ -27,7 +27,7 @@ import visual.statik.described.TransformableContent;
 
 /**
  * 
- * @author Hunter Cantrell
+ * @author Hunter Cantrell and Matthew Foley
  *
  */
 public class DynamicMusicShapes extends Stage
@@ -63,6 +63,12 @@ public class DynamicMusicShapes extends Stage
     
   }
   
+  /**
+   * 
+   * Draws the initial shape with black lines.
+   * @param width         Midi file to be sequenced.
+   * @throws IOException 
+   */
   public void updateShapes(final Sequence sequence) throws IOException
   {
     rays.clear();
@@ -84,6 +90,9 @@ public class DynamicMusicShapes extends Stage
 //    for (Content frame: frameList) System.out.println(frame.getBounds2D().getWidth());
   }
   
+  /**
+   * Creates new contents from the initial shape to begin tracing.
+   */
   public void updateFrames() 
   {
     spriteList = new DescribedSprite[90];
