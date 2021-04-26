@@ -39,9 +39,9 @@ public class MusicShapeApplication extends MusicDrawerApplication
   }
     
   /**
-   * Get the GUI component that will be used to display the weather information.
+   * Get the GUI component that will be used to display the music screen.
    * 
-   * @return The WeatherObserverPanel
+   * @return The Music Screen.
    */
   @Override
   protected JComponent getGUIComponent()
@@ -49,6 +49,9 @@ public class MusicShapeApplication extends MusicDrawerApplication
     return musicScreen.getView();
   }
   
+  /**
+   * Adds more functionility when load is clicked.
+   */
   @Override
   protected void handleLoad()
   {
