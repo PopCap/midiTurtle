@@ -3,7 +3,6 @@ package pathwork;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiMessage;
@@ -181,7 +180,7 @@ public class PathBuilder
     
       eventIndex++;
     }
-
+    
     return visual;
   }
   

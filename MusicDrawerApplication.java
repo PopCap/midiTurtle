@@ -1,32 +1,15 @@
 package musicapp;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics2D;
-//Java libraries
-import java.awt.event.*;
-import java.awt.geom.Path2D;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.URISyntaxException;
-import java.util.Random;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.imageio.ImageIO;
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiEvent;
-import javax.sound.midi.MidiMessage;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
-import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Track;
 import javax.swing.*;
 
 //Multimedia libraries
 import app.*;
-import io.*;
-import pathwork.PathBuilder;
 
 /**
  * An application that displays shapes drawn from music properties.
@@ -88,107 +71,104 @@ public abstract class MusicDrawerApplication extends JApplication implements Act
   /**
    * Handle the LOAD button.
    */
-  protected void handleLoad()
-  {
-    if(sequencer != null && sequencer.isRunning())
-    {
-      sequencer.close();
-    }
-      String fileName = fileField.getText();
-      File file;
-
-      try
-      {
-        file = new File(fileName);
-        FileInputStream fileInputStream = new FileInputStream(file);
-        sequence = MidiSystem.getSequence(fileInputStream);
-
-        sequencer = MidiSystem.getSequencer();
-        sequencer.open();
-        sequencer.setSequence(sequence);
-        
-        
-//        pathBuilder = new PathBuilder(seq);
-//        pathBuilder.buildPath();
-      } catch (IOException ioe)
-      {
-        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
-            "Error", JOptionPane.ERROR_MESSAGE);
-      } catch (InvalidMidiDataException e)
-      {
-        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
-            "Error", JOptionPane.ERROR_MESSAGE);
-      } catch (MidiUnavailableException e)
-      {
-        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
-            "Error", JOptionPane.ERROR_MESSAGE);
-      }
-  }
+  protected abstract void handleLoad();
+//  {
+//    if(sequencer != null && sequencer.isRunning())
+//    {
+//      sequencer.close();
+//    }
+//      String fileName = fileField.getText();
+//      File file;
+//
+//      try
+//      {
+//        file = new File(fileName);
+//        FileInputStream fileInputStream = new FileInputStream(file);
+//        sequence = MidiSystem.getSequence(fileInputStream);
+//
+//        sequencer = MidiSystem.getSequencer();
+//        sequencer.open();
+//        sequencer.setSequence(sequence);
+//        
+//      } catch (IOException ioe)
+//      {
+//        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+//            "Error", JOptionPane.ERROR_MESSAGE);
+//      } catch (InvalidMidiDataException e)
+//      {
+//        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+//            "Error", JOptionPane.ERROR_MESSAGE);
+//      } catch (MidiUnavailableException e)
+//      {
+//        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+//            "Error", JOptionPane.ERROR_MESSAGE);
+//      }
+//  }
 
   /**
    * Handle the PLAY button.
    */
-  protected void handlePlay()
-  {
-    sequencer.start();
-    
-  }
+  protected abstract void handlePlay();
+//  {
+//    sequencer.start();
+//    
+//  }
 
   /**
    * Handle the PAUSE button.
    */
-  protected void handlePause()
-  {
-    sequencer.stop();
-  }
+  protected abstract void handlePause();
+//  {
+//    sequencer.stop();
+//  }
 
   /**
    * Handle the EXPORT button.
    */
-  protected void handleExport()
-  {
-    try
-    {
-      Component contentPane = getGUIComponent();
-      BufferedImage image = new BufferedImage(contentPane.getWidth(), contentPane.getHeight(),
-          BufferedImage.TYPE_INT_RGB);
-
-      BufferedImage img = image.getSubimage(0, 0, contentPane.getWidth(), contentPane.getHeight());
-
-      Graphics2D g2d = img.createGraphics();
-      g2d = img.createGraphics();
-      contentPane.printAll(g2d);
-      g2d.dispose();
-      try
-      {
-        Random random = new Random();
-        ImageIO.write(img, "png",
-            new File(
-                getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()
-                    + "\\shapeDrawerApplicationImage_" + random.nextInt(100) + ".png"));
-      } catch (URISyntaxException e)
-      {
-        e.printStackTrace();
-      }
-    } catch (IOException ex)
-    {
-      ex.printStackTrace();
-    }
-  }
+  protected abstract void handleExport();
+//  {
+//    try
+//    {
+//      Component contentPane = getGUIComponent();
+//      BufferedImage image = new BufferedImage(contentPane.getWidth(), contentPane.getHeight(),
+//          BufferedImage.TYPE_INT_RGB);
+//
+//      BufferedImage img = image.getSubimage(0, 0, contentPane.getWidth(), contentPane.getHeight());
+//
+//      Graphics2D g2d = img.createGraphics();
+//      g2d = img.createGraphics();
+//      contentPane.printAll(g2d);
+//      g2d.dispose();
+//      try
+//      {
+//        Random random = new Random();
+//        ImageIO.write(img, "png",
+//            new File(
+//                getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()
+//                    + "\\shapeDrawerApplicationImage_" + random.nextInt(100) + ".png"));
+//      } catch (URISyntaxException e)
+//      {
+//        e.printStackTrace();
+//      }
+//    } catch (IOException ex)
+//    {
+//      ex.printStackTrace();
+//    }
+//  }
 
   /**
    * Handle the RESTART button.
    */
-  protected void handleRestart()
-  {
-    sequencer.stop();
-    handleLoad();
-  }
+  protected abstract void handleRestart();
+//  {
+//    sequencer.stop();
+//    handleLoad();
+//  }
 
   /**
-   * Get the GUI components to use to display the music screen.
+   * Get the GUI components to use to display the weather information.
    * 
-   * @return The MusicScreen
+   * @return The WeatherObserverPanel
    */
   protected abstract JComponent getGUIComponent();
 
