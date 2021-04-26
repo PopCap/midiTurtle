@@ -75,6 +75,8 @@ public class PathBuilder
     sampleIndex = 0; // keep track of current number of times sampled from song
     
     visual.moveTo(x, y);
+    visual.lineTo(x, y);
+//    frames.add((Path2D.Float)visual);
 
     // get ArrayList of all tick times in tracks
     for (Track track : midiTracks)
@@ -118,13 +120,6 @@ public class PathBuilder
       }
     }
     deltaY = 0.0f;
-//    for (Long tick: tickTimes) System.out.println(tick);
-//    System.out.println("_________________");
-//    for (Long tick: sampleTimes) System.out.println(tick);
-    // loop through tickTimes to determine sampleTimes
-    
-//    Collections.sort(tickTimes);
-//    for (Long tick: tickTimes) System.out.println(tick);
   }
   
   /**
@@ -213,68 +208,3 @@ public class PathBuilder
   }
 }
 
-/////////////////////////////////////////////////////////////////
-//int trackNumber = 0;
-//for (Track track :  sequence.getTracks()) {
-//  trackNumber++;
-//  System.out.println("Track " + trackNumber + ": size = " + track.size());
-//  System.out.println();
-//    for(int i = 0; i < track.size(); i++)
-//    {
-//      MidiEvent event = track.get(i);
-//      System.out.print("@" + event.getTick() + " ");
-//      MidiMessage message = event.getMessage();
-//      if (message instanceof ShortMessage) {
-//          ShortMessage sm = (ShortMessage) message;
-//          System.out.print("Channel: " + sm.getChannel() + " ");
-//          if (sm.getCommand() == NOTE_ON) {
-//              int key = sm.getData1();
-//              int octave = (key / 12)-1;
-//              int note = key % 12;
-//              String noteName = NOTE_NAMES[note];
-//              int velocity = sm.getData2();
-//              System.out.println("Note on, " + noteName + octave + " key=" + key + " velocity: " + velocity);
-//          } else if (sm.getCommand() == NOTE_OFF) {
-//              int key = sm.getData1();
-//              int octave = (key / 12)-1;
-//              int note = key % 12;
-//              String noteName = NOTE_NAMES[note];
-//              int velocity = sm.getData2();
-//              System.out.println("Note off, " + noteName + octave + " key=" + key + " velocity: " + velocity);
-//          } else {
-//              System.out.println("Command:" + sm.getCommand());
-//          }
-//      } else {
-//          System.out.println("Other message: " + message.getClass());
-//      }
-//    }
-//  }
-//  
-////  I think the best way to get this to work is to keep a boolean table of which notes are on at the time of sampling
-////  and then figure out when to sample: I am a genius and don't tell me otherwise
-//  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//
-//  System.out.println();
-//////////////////////////////////////////////////////////////////
-
-//// check whether at a designated sample time
-//if (tickIndex == sampleIndex * indexJump)
-//{
-//System.out.println("SAMPLE TIME");
-//deltaY = 0.0f;
-//// collect current note data to change deltaY
-//for (int i = 0; i < 12; i++)
-//{
-//  if (activeNotes[i])
-//  {
-//    deltaY += NOTE_FREQ[i];
-//  }
-//}
-//
-//visual.lineTo(x + deltaX, y + deltaY);
-//x += deltaX;
-//sampleIndex++;
-////System.out.print("Sample: " + sampleIndex + " --- ");
-////System.out.println("X: " + x + ", Delta Y: " + deltaY);
-//tickIndex += (sampleIndex * indexJump);
-//}

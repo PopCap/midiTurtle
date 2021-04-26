@@ -9,6 +9,7 @@ import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.sound.midi.Sequence;
 
@@ -34,9 +35,10 @@ public class DynamicMusicShapes extends Stage
   private Color currentColor;
   private List<TransformableContent> rays;
   private ArrayList<visual.statik.described.Content> frameList;
-  private ArrayList<AggregateContent> aggregateList;
+  private DescribedSprite[] spriteList;
   PathBuilder pathBuilder;
   VisualBuilder visualBuilder;
+  VisualizationView view;
 
   /**
    * 
@@ -54,7 +56,7 @@ public class DynamicMusicShapes extends Stage
     
     final Color BACKGROUND_COLOR = new Color(20, 20, 20);
     
-    VisualizationView view = getView();
+    view = getView();
     view.setBounds(0, 0, width, height);
     view.setSize(width, height);
     view.setBackground(BACKGROUND_COLOR);
@@ -63,6 +65,7 @@ public class DynamicMusicShapes extends Stage
   
   public void updateShapes(final Sequence sequence) throws IOException
   {
+    rays.clear();
     pathBuilder = new PathBuilder(sequence);
     visualBuilder = new VisualBuilder(pathBuilder);
     
@@ -81,50 +84,52 @@ public class DynamicMusicShapes extends Stage
 //    for (Content frame: frameList) System.out.println(frame.getBounds2D().getWidth());
   }
   
-  public void updateFrames() //visual.statik.described.Content
+  public void updateFrames() 
   {
-//    aggregateList = new ArrayList<AggregateContent>();
-//    
-//    for (int i = 0; i < frameList.size(); i++)
-//    {
-//      AggregateContent aggregate = new AggregateContent();
-//      for (int j = 0; j < i; j++)
-//      {
-//        aggregate.add(frameList.get(i));
-//      }
-//      
-//      
-//      aggregateList.add(aggregate);
-//    }
-    
-    DescribedSprite sprite = new DescribedSprite();
-    Point2D location = new Point(0, 0);
-    AggregateContent aggregate = new AggregateContent();
-//    AggregateContent aggregate2 = new AggregateContent();
-    
-    for(int i = 0; i < frameList.size()/2; i++)  
-    { 
-      aggregate.add(frameList.get(i));
-      for (int j = 0; j < 89; j++)
-      {
-        sprite.addKeyTime(i * 1000, location, i*1.0, 1.0, aggregate);
-      }
+    spriteList = new DescribedSprite[90];
+//    DescribedSprite sprite = new DescribedSprite();
+    for (int i = 0; i < spriteList.length; i++)
+    {
+      spriteList[i] = new DescribedSprite();
     }
     
-//    for(int i = 0; i < frameList.size(); i++)  
-//    { 
-//      aggregate2.add(frameList.get(i));  
-//    }
-//    
-//    sprite.addKeyTime(4000,  location, 0.0, 1.0, aggregate2);
-
+    Point2D location = new Point(0, 0);
     
-//    for (int i = 0; i < 89; i++)
-//    {
-//      aggregate.setRotation(i, 500.0, 500.0);
-//      sprite.addKeyTime(1500,  location, 0.0, 1.0, aggregate);
-//    }
+    AggregateContent[] ac = new AggregateContent[frameList.size()];
+    for (int i = 0; i < frameList.size(); i++)
+    {
+      ac[i] = new AggregateContent();
+      frameList.get(i).setRotation(90, 500.0, 500.0);
+      ac[i].add(frameList.get(i));
+//      ac[i].setRotation(90, 500.0, 500.0);
+    }
+    int time = 300;
+    
+//    DescribedSprite sprite = new DescribedSprite();
+
+//    sprite.addKeyTime(500, location, 0.0, 1.0, ac[1]);
+//    sprite.addKeyTime(1000, location, 0.0, 1.0, ac[2]);
+    
+//    for (int i = 0; i < spriteList.length; i++)
+    DescribedSprite sprite = new DescribedSprite();
+    {
+      for (AggregateContent content: ac)
+      {
+        sprite.addKeyTime(time, location, 0.0, 1.0, content);
+//        spriteList[i].setRotation(i, 500.0, 500.0);
+        time += 300;
+      }
+    }
+    sprite.setRotation(180);
     add(sprite);
+//    for (AggregateContent content: ac)
+//    {
+//      spriteList[0].addKeyTime(time, location, 0.0, 1.0, content);
+//      spriteList[1].addKeyTime(time, location, 0.0, 1.0, content);
+//      time += 300;
+//    }
+//    add(spriteList[0]);
+//    add(spriteList[1]);
   }
 
 }

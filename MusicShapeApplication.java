@@ -56,34 +56,36 @@ public class MusicShapeApplication extends MusicDrawerApplication
     {
       sequencer.close();
     }
-      String fileName = fileField.getText();
-      File file;
+    
+    musicScreen.clear();
+    
+    String fileName = fileField.getText();
+    File file;
+    try
+    {
+      file = new File(fileName);
+      FileInputStream fileInputStream = new FileInputStream(file);
+      sequence = MidiSystem.getSequence(fileInputStream);
 
-      try
-      {
-        file = new File(fileName);
-        FileInputStream fileInputStream = new FileInputStream(file);
-        sequence = MidiSystem.getSequence(fileInputStream);
-
-        sequencer = MidiSystem.getSequencer();
-        sequencer.open();
-        sequencer.setSequence(sequence);
-        
-        musicScreen.updateShapes(sequence);
-        musicScreen.updateFrames();
-      } catch (IOException ioe)
-      {
-        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
-            "Error", JOptionPane.ERROR_MESSAGE);
-      } catch (InvalidMidiDataException e)
-      {
-        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
-            "Error", JOptionPane.ERROR_MESSAGE);
-      } catch (MidiUnavailableException e)
-      {
-        JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
-            "Error", JOptionPane.ERROR_MESSAGE);
-      }
+      sequencer = MidiSystem.getSequencer();
+      sequencer.open();
+      sequencer.setSequence(sequence);
+      
+      musicScreen.updateShapes(sequence);
+      musicScreen.updateFrames();
+    } catch (IOException ioe)
+    {
+      JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+          "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (InvalidMidiDataException e)
+    {
+      JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+          "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (MidiUnavailableException e)
+    {
+      JOptionPane.showMessageDialog(getGUIComponent(), "There was a problem reading " + fileName,
+          "Error", JOptionPane.ERROR_MESSAGE);
+    }
   }
   
   @Override
