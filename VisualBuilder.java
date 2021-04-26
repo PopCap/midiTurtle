@@ -21,8 +21,8 @@ public class VisualBuilder
   
   /**
    * Explicit value constructor.
-   *
-   * @param builder Used to create the paths
+   * 
+   * @param builder PathBuilder core.
    */
   public VisualBuilder(final PathBuilder builder)
   {
@@ -30,10 +30,11 @@ public class VisualBuilder
   }
   
   /**
-   * Build the content.
-   *
-   * @param boundaryColor set the color.
-   * @param interiorColor set the color of the inside of the shape.
+   * Create the described statik background visual in a particular color from the PathBuilder's path.
+   * 
+   * @param boundaryColor Color of line segment.
+   * @param interiorColor should be transparent.
+   * @return visual Content.
    * @throws IOException
    */
   public Content buildContent(final Color boundaryColor, final Color interiorColor)
@@ -50,10 +51,11 @@ public class VisualBuilder
     }
   
   /**
-   * Build the content to be able to iterate over them.
-   *
-   * @param boundaryColor set the color.
-   * @param interiorColor set the color of the inside of the shape.
+   * Fill and return ArrayList of described statik content which composes one singular audio "line".
+   * 
+   * @param boundaryColor Color of the line segment.
+   * @param interiorColor should be transparent.
+   * @return visualFrames the ArrayList.
    */
   public ArrayList<Content> buildContentFrames(final Color boundaryColor, final Color interiorColor)
   {

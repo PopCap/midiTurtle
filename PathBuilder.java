@@ -76,7 +76,6 @@ public class PathBuilder
     
     visual.moveTo(x, y);
     visual.lineTo(x, y);
-//    frames.add((Path2D.Float)visual);
 
     // get ArrayList of all tick times in tracks
     for (Track track : midiTracks)
@@ -143,17 +142,14 @@ public class PathBuilder
             ShortMessage sm = (ShortMessage) message;
             // update which notes are on and off at event time
             if (tickTimes.contains(event.getTick()))
-//            if (event.getTick() == tickTimes.get(tickIndex)) // TAKE A LOOK AT THIS AGAIN
             {
               if (sm.getCommand() == NOTE_ON)
               {
                 activeNotes[sm.getData1() % 12] = true;
-//                System.out.println(NOTE_NAMES[sm.getData1() % 12] + " ON");
               }
               else if (sm.getCommand() == NOTE_OFF)
               {
                 activeNotes[sm.getData1() % 12] = false;
-//                System.out.println(NOTE_NAMES[sm.getData1() % 12] + " OFF");
               }
             }
           }
@@ -162,7 +158,6 @@ public class PathBuilder
 //    check whether at a designated sample time
       if (sampleIndex < 50 && tickTimes.get(tickIndex) == sampleTimes.get(sampleIndex))
       {
-//        System.out.println("SAMPLE TIME");
         deltaY = 0.0f;
         // collect current note data to change deltaY
         for (int i = 0; i < 12; i++)
@@ -190,6 +185,10 @@ public class PathBuilder
     return visual;
   }
   
+  /**
+   * Access frames ArrayList.
+   * @return frames the ArrayList.
+   */
   public ArrayList<Path2D.Float> getShapeFrames()
   {
     return frames;
