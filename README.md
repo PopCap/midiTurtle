@@ -8,4 +8,5 @@ restart will rest everything as if you just clicked load. Finally, if you would 
 a .png file of the image will be saved in the same folder that the program is contained in.
 
 Known bugs in the program are associated with the export button. Currently it exports the file to the bin folder within the jar when it is 
-exported which is not accessible from the executable jar.
+exported which is not accessible from the executable jar. Another bug is how the white line is traced over the black. It is supposed to be more smooth and drawn
+out and not so choppy. We believe its becuase tweening doesnt look as smooth when its just drawing lines from point to point between key times.
